@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso a los Tests</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #eef3ff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 0;
+      overflow: auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .container {
+      background-color: #e9f5ff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 800px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .input-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .button-group {
+      display: none;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .button-group button {
+      flex: 1 1 45%;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+      max-width: 200px;
+    }
+    .button-group button:hover {
+      background-color: #0056b3;
+    }
+    .test-section {
+      display: none;
+      margin-top: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background-color: #ffffff;
+      padding: 8px;
+      border-radius: 6px;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 6px;
+    }
+    a {
+      text-decoration: none;
+      font-size: 14px;
+      color: #007BFF;
+      font-weight: bold;
+      display: block;
+      padding: 6px;
+    }
+    @media (max-width: 600px) {
+      .button-group button {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+  <script>
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    }
+    async function checkPassword() {
+      var password = document.getElementById("password").value;
+      var hashedInput = await hashPassword(password);
+      var correctHash = "b1556dea32e9d0cdbfed038fd7787275775ea40939c146a64e205bcb349ad02f";
+      if (hashedInput === correctHash) {
+        document.getElementById("unlockSection").style.display = "none";
+        document.getElementById("buttonGroup").style.display = "flex";
+      } else {
+        alert("Código incorrecto. Inténtalo de nuevo.");
+      }
+    }
+    function showSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section.style.display === 'block') {
+        section.style.display = 'none';
+      } else {
+        document.querySelectorAll('.test-section').forEach(section => {
+          section.style.display = 'none';
+        });
+        section.style.display = 'block';
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div id="unlockSection">
+      <h1>Acceso a los Tests</h1>
+      <p>Introduce el código para acceder:</p>
+      <div class="input-group">
+        <input type="password" id="password">
+        <button onclick="checkPassword()">Desbloquear</button>
+      </div>
+    </div>
+    <div id="buttonGroup" class="button-group">
+      <button onclick="showSection('abel')">Academia Abel</button>
+      <button onclick="showSection('torrente')">Academia Torrente</button>
+      <button onclick="showSection('mad')">Academia MAD</button>
+      <button onclick="showSection('simulacros')">Simulacros</button>
+      <button onclick="showSection('examenes')">Exámenes</button>
+    </div>
+    <div id="abel" class="test-section">
+      <h2>Parte Común</h2>
+      <ul>
+        <li><a href="ABEL_COMUN_TEMA1.html">TEMA 1: La Constitución Española de 1978</a></li>
+        <li><a href="ABEL_COMUN_TEMA2.html">TEMA 2: El Estatuto de Autonomía de Extremadura</a></li>
+        <li><a href="ABEL_COMUN_TEMA3.html">TEMA 3: El Estatuto Marco del Personal Estatutario</a></li>
+        <li><a href="ABEL_COMUN_TEMA4.html">TEMA 4: La Ley de Salud de Extremadura. Estatuto del SES</a></li>
+      </ul>
+      <h2>Parte Específica</h2>
+      <ul>
+        <li><a href="ABEL_ESPEC_TEMA1.HTML">TEMA 1: Asistencia Sanitaria</a></li>
+        <li><a href="ABEL_ESPEC_TEMA2.HTML">TEMA 2: El Personal Subalterno y funciones del Celador</a></li>
+        <li><a href="ABEL_ESPEC_TEMA3.HTML">TEMA 3: Actuación en habitaciones y aseo del paciente</a></li>
+        <li><a href="ABEL_ESPEC_TEMA 3_1.html">TEMA 3: Incendios</a></li>        
+        <li><a href="ABEL_ESPEC_TEMA4.HTML">TEMA 4: Traslado y movilidad de pacientes</a></li>
+        <li><a href="ABEL_ESPEC_TEMA5.HTML">TEMA 5: Normas de actuación en los quirófanos. Normas de higiene. La esterilización</a></li>
+        <li><a href="ABEL_ESPEC_TEMA6.HTML">TEMA 6: Actuación del Celador en relación con los pacientes fallecidos.</a></li>
+        <li><a href="ABEL_ESPEC_TEMA9.HTML">TEMA 9: El celador almacenero. Recepción y almacenamiento de mercancías.</a></li>
+        <li><a href="ABEL_ESPEC_TEMA10.HTML">TEMA 10: Ley de Prevención de Riesgos Laborales</a></li>
+        <li><a href="ABEL_ESPEC_TEMA11.HTML">TEMA 11: Ley de Igualdad entre mujeres y hombres y contra la violencia de género</a></li>
+      </ul>
+    </div>
+    <div id="torrente" class="test-section">
+      <h2>Parte Común</h2>
+      <ul>
+        <li><a href="TORRENTE_COMUN_TEMA1_1.HTML">TEMA 1,2,3,4 de Común_50 preguntas</a><li>
+        <li><a href="TORRENTE_COMUN_TEMA1_2.HTML">TEMA 1: La Constitución Española de 1978_2_50 preguntas</a><li>
+        <li><a href="TORRENTE_COMUN_TEMA1_3.HTML">TEMA 1: La Constitución Española de 1978_3_50 preguntas</a><li>
+        <li><a href="TORRENTE_COMUN_TEMA1_4.HTML">TEMA 1: La Constitución Española de 1978_4_50 preguntas</a><li>
+        <li><a href="TORRENTE_COMUN_TEMA3_1.HTML">TEMA 3: El Estatuto Marco del Personal Estatutario_1_30 preguntas</a></li>
+        <li><a href="TORRENTE_COMUN_TEMA3_2.HTML">TEMA 3: El Estatuto Marco del Personal Estatutario_2_50 preguntas</a></li>
+        <li><a href="TORRENTE_COMUN_TEMA3_3.HTML">TEMA 3: El Estatuto Marco del Personal Estatutario_3_50 preguntas</a></li>
+        <li><a href="TORRENTE_COMUN_TEMA4_1.HTML">TEMA 4: Ley de Salud de Extremadura_1_50 preguntas</a></li>
+      </ul>
+      <h2>Parte Específica</h2>
+      <ul>
+        <li><a href="TORRENTE_ESPEC_TEMA1_1.HTML">TEMA 1: Asistencia Sanitaria_1_25 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA1_2.HTML">TEMA 1: Asistencia Sanitaria_2_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA1_3.HTML">TEMA 1: Asistencia Sanitaria_3_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA1_4.HTML">TEMA 1: Asistencia Sanitaria_4_25 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA1_5.HTML">TEMA 1: Asistencia Sanitaria_5_25 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA1_6.HTML">TEMA 1: Asistencia Sanitaria_6_25 preguntas</a></li>
+                <li><a href="TORRENTE_ESPEC_TEMA1_7.HTML">TEMA 1: Asistencia Sanitaria_7_25 preguntas</a></li>
+                <li><a href="TORRENTE_ESPEC_TEMA1_8.HTML">TEMA 1: Asistencia Sanitaria_8_25 preguntas</a></li>
+                <li><a href="TORRENTE_ESPEC_TEMA1_9.HTML">TEMA 1: Asistencia Sanitaria_9_30 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA2_1.HTML">TEMA 2: El Personal Subalterno y funciones del Celador_1_60 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA2_2.HTML">TEMA 2: El Personal Subalterno y funciones del Celador_2_100 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA2_3.HTML">TEMA 2: El Personal Subalterno y funciones del Celador_3_100 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA2_4.HTML">TEMA 2: El Personal Subalterno y funciones del Celador_4_22 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA2_5.HTML">TEMA 2: El Personal Subalterno y funciones del Celador_5_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA2_6.HTML">TEMA 2: El Personal Subalterno y funciones del Celador_6_60 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA3_1.HTML">TEMA 3: Actuación en habitaciones y aseo del paciente_1_60 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA3_2.HTML">TEMA 3: Actuación en habitaciones y aseo del paciente_2_50 preguntas</a></li>
+         <li><a href="TORRENTE_ESPEC_TEMA3_3.HTML">TEMA 3: Actuación en habitaciones y aseo del paciente_3_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA3_4.HTML">TEMA 3: Actuación en habitaciones y aseo del paciente_4_60 preguntas</a></li>
+         <li><a href="TORRENTE_ESPEC_TEMA3_5.HTML">TEMA 3: Actuación en habitaciones y aseo del paciente_5_90 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA4_1.HTML">TEMA 4: Traslado y movilidad del paciente_1_50_preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA4_2.HTML">TEMA 4: Traslado y movilidad del paciente_2_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA4_3.HTML">TEMA 4: Traslado y movilidad del paciente_3_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA4_4.HTML">TEMA 4: Traslado y movilidad del paciente_4_25 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA5_1.HTML">TEMA 5: Normas de actuación en los quirófanos. Normas de higiene. La esterilización_1_50 preguntas</a></li>
+         <li><a href="TORRENTE_ESPEC_TEMA5_2.HTML">TEMA 5: Normas de actuación en los quirófanos. Normas de higiene. La esterilización_2_50 preguntas</a></li>
+       <li><a href="TORRENTE_ESPEC_TEMA5_3.HTML">TEMA 5: Normas de actuación en los quirófanos. Normas de higiene. La esterilización_3_50 preguntas</a></li>
+               <li><a href="TORRENTE_ESPEC_TEMA5_4.HTML">TEMA 5: Normas de actuación en los quirófanos. Normas de higiene. La esterilización_4_50 preguntas</a></li>
+           <li><a href="TORRENTE_ESPEC_TEMA5_5.HTML">TEMA 5: Normas de actuación en los quirófanos. Normas de higiene. La esterilización_5_50 preguntas</a></li>
+                   <li><a href="TORRENTE_ESPEC_TEMA5_6.HTML">TEMA 5: Normas de actuación en los quirófanos. Normas de higiene. La esterilización_6_50 preguntas</a></li>
+            <li><a href="TORRENTE_ESPEC_TEMA5_7.HTML">TEMA 5: Normas de actuación en los quirófanos. Normas de higiene. La esterilización_7_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA6_1.HTML">TEMA 6: Actuación del Celador en relación con los pacientes fallecidos_1_50 preguntas.</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA6_2.HTML">TEMA 6: Actuación del Celador en relación con los pacientes fallecidos_2_60 preguntas.</a></li>
+         <li><a href="TORRENTE_ESPEC_TEMA6_3.HTML">TEMA 6: Actuación del Celador en relación con los pacientes fallecidos_3_50 preguntas.</a></li>
+         <li><a href="TORRENTE_ESPEC_TEMA6_4.HTML">TEMA 6: Actuación del Celador en relación con los pacientes fallecidos_4_25 preguntas.</a></li>
+         <li><a href="TORRENTE_ESPEC_TEMA6_5.HTML">TEMA 6: Actuación del Celador en relación con los pacientes fallecidos_5_50 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA7_1.HTML">TEMA 7: Salud Mental_1_35 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA7_2.HTML">TEMA 7: Salud Mental_2_61 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA7_AMBULANCIAS.HTML">TEMA 7: Ambulancias 40 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA7_AMBULANCIAS2.HTML">TEMA 7: Ambulancias 2 40 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA7_URGENCIAS.HTML">TEMA 7: Urgencias y Primeros Auxilios 40 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA8_1.HTML">TEMA 8: Redes Informáticas_30 preguntas</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA9_1.HTML">TEMA 9: El celador almacenero. Recepción y almacenamiento de mercancías_1_25 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA9_2.HTML">TEMA 9: El celador almacenero. Recepción y almacenamiento de mercancías_2_50 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA9_3.HTML">TEMA 9: El celador almacenero. Recepción y almacenamiento de mercancías_3_50 preguntas.</a></li>
+          <li><a href="TORRENTE_ESPEC_TEMA10_1.HTML">TEMA 10: Ley de Prevención de Riesgos Laborales</a></li>
+         <li><a href="TORRENTE_ESPEC_TEMA10_2.HTML">TEMA 10: Ley de Prevención de Riesgos Laborales_2_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA10_3.HTML">TEMA 10: Ley de Prevención de Riesgos Laborales_3_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA11_1.HTML">TEMA 11: Ley de Igualdad_1_25 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA11_2.HTML">TEMA 11: Ley de Igualdad_2_40 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA11_3.HTML">TEMA 11: Ley de Igualdad_3_50 preguntas</a></li>
+        <li><a href="TORRENTE_ESPEC_TEMA11_4.HTML">TEMA 11: Ley de Igualdad_4_25 preguntas</a></li>
+      </ul>
+    </div>
+    <div id="mad" class="test-section">
+      <h2>Parte Común</h2>
+      <ul>
+        <li><a href="MAD_COMUN_TEMA1.HTML">TEMA 1: La Constitución Española de 1978</a></li>
+        <li><a href="MAD_COMUN_TEMA2.HTML">TEMA 2: El Estatuto de Autonomía de Extremadura</a></li>
+        <li><a href="MAD_COMUN_TEMA3.HTML">TEMA 3: El Estatuto Marco del Personal Estatutario</a></li>
+        <li><a href="MAD_COMUN_TEMA4.HTML">TEMA 4: La Ley de Salud de Extremadura. Estatuto del SES</a></li>
+
+      </ul>
+      <h2>Parte Específica</h2>
+      <ul>
+        <li><a href="MAD_ESPEC_TEMA1.HTML">TEMA 1: Asistencia Sanitaria</a></li>
+        <li><a href="MAD_ESPEC_TEMA2.HTML">TEMA 2: El Personal Subalterno y funciones del Celador</a></li>
+        <li><a href="MAD_ESPEC_TEMA3.HTML">TEMA 3: Actuación en habitaciones y aseo del paciente</a></li>
+       <li><a href="MAD_ESPEC_TEMA4.HTML">TEMA 4: Traslado y movilidad del paciente</a></li>
+        <li><a href="MAD_ESPEC_TEMA5.HTML">TEMA 5: Normas de actuación en los quirófanos</a></li>
+         <li><a href="MAD_ESPEC_TEMA6.HTML">TEMA 6: Actuación del Celador en relación con los pacientes fallecidos.</a></li>
+        <li><a href="MAD_ESPEC_TEMA7.HTML">TEMA 7: La actuación del celador en unidades de salud mental</a></li>
+        <li><a href="MAD_ESPEC_TEMA8.HTML">TEMA 8: Redes informáticas</a></li>
+        <li><a href="MAD_ESPEC_TEMA9.HTML">TEMA 9: El celador almacenero. Recepción y almacenamiento de mercancías.</a></li>
+        <li><a href="MAD_ESPEC_TEMA10.HTML">TEMA 10: Ley de Prevención de Riesgos Laborales</a></li>
+        <li><a href="MAD_ESPEC_TEMA11.HTML">TEMA 11: La Ley de Igualdad_20 preguntas</a></li>
+
+      </ul>
+    </div>
+    <div id="simulacros" class="test-section">
+      <h2>Simulacros</h2>
+      <ul>
+        <li><a href="SIMULACRO_ESPEC_ABEL_ALEATORIO.HTML">SIMULACRO Aleatorio Especifico (Abel) 70 preguntas</a></li>
+        <li><a href="SIMULACRO_COMUN.html">SIMULACRO Aleatorio Común (Abel, MAD, Torrente) 70 preguntas</a></li>
+      </ul>
+    </div>
+    <div id="examenes" class="test-section">
+      <h2>Exámenes</h2>
+      <ul>
+        <li><a href="EXAM_ESPEC_ABEL_ALEATORIO.HTML">Examen Aleatorio Especifico (Abel) 70 preguntas</a></li>
+        <li><a href="EXAM_COMUN.html">Examen Aleatorio Común (Abel, MAD, Torrente) 70 preguntas</a></li>
+        <li><a href="EXAM_OFICIAL_2018.HTML">Examen Oficial 2018 Tipo 1 SES</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
